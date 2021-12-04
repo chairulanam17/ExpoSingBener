@@ -3,13 +3,20 @@ import { StyleSheet, Text, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import colors from "../misc/colors";
 
-export default function RoundIconBtn({ antIconName, size, color, style }) {
+export default function RoundIconBtn({
+  antIconName,
+  size,
+  color,
+  style,
+  onPress,
+}) {
   return (
     <AntDesign
       style={[styles.icon, { ...style }]}
       name={antIconName}
       size={size || 24}
       color={color || colors.LIGHT}
+      onPress={onPress}
     />
   );
 }

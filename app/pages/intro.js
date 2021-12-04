@@ -1,3 +1,4 @@
+import AsyncStorageLib from "@react-native-async-storage/async-storage";
 import React, { useState } from "react";
 import {
   StatusBar,
@@ -11,8 +12,12 @@ import RoundIconBtn from "../components/RoundIconBtn";
 import colors from "../misc/colors";
 
 export default function Intro() {
-  const [user, setUser] = useState("");
-  const handleOnChange = (text) => setUser(text);
+  const [name, setName] = useState("");
+  const handleOnChange = (text) => setName(text);
+  const handleSubmit = async () => {
+    const user = { name: name };
+    await AsyncStorageLib.setItem("user", JSON.stringify(user));
+  };
 
   return (
     <>
@@ -20,13 +25,13 @@ export default function Intro() {
       <View style={styles.container}>
         <Text style={styles.inputTitle}>Enter Your Name to Continue</Text>
         <TextInput
-          value={user}
+          value={name}
           onChangeText={handleOnChange}
           placeholder="Enter Name"
           style={styles.textInput}
         />
-        {user.trim().length >= 3 ? (
-          <RoundIconBtn antIconName="arrowright" />
+        {name.trim().length >= 3 ? (
+          <RoundIconBtn antIconName="arrowright" onPress={handleSubmit} />
         ) : null}
       </View>
     </>
