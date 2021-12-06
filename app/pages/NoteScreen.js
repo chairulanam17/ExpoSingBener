@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { StatusBar, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StatusBar, StyleSheet, Text, View } from "react-native";
+import NoteInputModal from "../components/NoteInputModal";
 import RoundIconBtn from "../components/RoundIconBtn";
 import SearchBar from "../components/SearchBar";
 import colors from "../misc/colors";
 
 export default function NoteScreen({ user }) {
   const [greet, setGreet] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
 
   const findGreet = () => {
     const hrs = new Date().getHours();
@@ -28,12 +30,17 @@ export default function NoteScreen({ user }) {
         >
           <Text style={styles.emptyHeader}>Add Notes</Text>
           <RoundIconBtn
-            onPress={() => console.log("opneing modal")}
+            onPress={() => setModalVisible(true)}
             antIconName="plus"
             style={styles.addBtn}
           />
         </View>
       </View>
+
+      <NoteInputModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+      />
     </>
   );
 }
@@ -46,6 +53,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
     flex: 1,
+    zIndex: 1,
   },
   emptyHeader: {
     fontSize: 30,

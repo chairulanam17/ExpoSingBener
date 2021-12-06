@@ -11,12 +11,13 @@ import {
 import RoundIconBtn from "../components/RoundIconBtn";
 import colors from "../misc/colors";
 
-export default function Intro() {
+export default function Intro({ onFinish }) {
   const [name, setName] = useState("");
   const handleOnChange = (text) => setName(text);
   const handleSubmit = async () => {
     const user = { name: name };
     await AsyncStorageLib.setItem("user", JSON.stringify(user));
+    if (onFinish) onFinish();
   };
 
   return (

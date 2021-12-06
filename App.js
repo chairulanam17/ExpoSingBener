@@ -6,14 +6,18 @@ import Intro from "./app/pages/intro";
 import NoteScreen from "./app/pages/NoteScreen";
 
 export default function App() {
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState({});
   const findUser = async () => {
     const result = await AsyncStorageLib.getItem("user");
-    setUser(JSON.parse(result));
+    if (result !== null) {
+      setUser(JSON.parse(result));
+    }
   };
   useEffect(() => {
     findUser();
+    // AsyncStorageLib.clear();
   }, []);
+  if (!user.name) return <Intro onFinish={findUser} />;
   return <NoteScreen user={user} />;
 }
 
