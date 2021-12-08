@@ -13,7 +13,7 @@ import {
 import colors from "../misc/colors";
 import RoundIconBtn from "./RoundIconBtn";
 
-export default function NoteInputModal({ visible, onClose }) {
+export default function NoteInputModal({ visible, onClose, onsubmit }) {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const handleModalClose = () => {
@@ -30,7 +30,18 @@ export default function NoteInputModal({ visible, onClose }) {
 
   const handleSubmit = () => {
     if (!title.trim() && !desc.trim()) return onClose();
+    onsubmit(title, desc);
+    setTitle("");
+    setDesc("");
+    onClose();
   };
+
+  const closeModal = () => {
+    setTitle("");
+    setDesc("");
+    onClose();
+  };
+
   return (
     <>
       {/* <SafeAreaView style={styles.safearea}> */}
@@ -56,11 +67,14 @@ export default function NoteInputModal({ visible, onClose }) {
               antIconName="check"
               onPress={handleSubmit}
             />
-            <RoundIconBtn
-              size={15}
-              style={{ marginLeft: 20 }}
-              antIconName="close"
-            />
+            {title.trim() || desc.trim() ? (
+              <RoundIconBtn
+                size={15}
+                style={{ marginLeft: 20 }}
+                antIconName="close"
+                onPress={closeModal}
+              />
+            ) : null}
           </View>
         </View>
         <TouchableWithoutFeedback onPress={handleModalClose}>
