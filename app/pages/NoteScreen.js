@@ -16,7 +16,7 @@ import RoundIconBtn from "../components/RoundIconBtn";
 import SearchBar from "../components/SearchBar";
 import colors from "../misc/colors";
 
-export default function NoteScreen({ user }) {
+export default function NoteScreen({ user, navigation }) {
   const [greet, setGreet] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [notes, setNotes] = useState([]);
@@ -46,7 +46,9 @@ export default function NoteScreen({ user }) {
     setNotes(updatedNotes);
     await AsyncStorageLib.setItem("notes", JSON.stringify(updatedNotes));
   };
-
+  const openNote = (note) => {
+    navigation.navigate("NoteDetail", { note });
+  };
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor={colors.LIGHT} />
@@ -61,7 +63,7 @@ export default function NoteScreen({ user }) {
             data={notes}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <Note onPress={() => console.log("ditekan")} item={item} />
+              <Note onPress={() => openNote(item)} item={item} />
             )}
             numColumns={2}
             columnWrapperStyle={{
