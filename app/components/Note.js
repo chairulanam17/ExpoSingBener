@@ -1,16 +1,22 @@
 import React from "react";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import colors from "../misc/colors";
 
-export default function Note({ item }) {
+export default function Note({ item, onPress }) {
   const { title, desc } = item;
   return (
-    <View style={styles.container}>
+    <TouchableOpacity onPress={onPress} style={styles.container}>
       <Text style={styles.title} numberOfLines={2}>
         {title}
       </Text>
       <Text numberOfLines={3}>{desc}</Text>
-    </View>
+    </TouchableOpacity>
   );
 }
 const lebar = Dimensions.get("window").width - 40;

@@ -60,7 +60,9 @@ export default function NoteScreen({ user }) {
           <FlatList
             data={notes}
             keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => <Note item={item} />}
+            renderItem={({ item }) => (
+              <Note onPress={() => console.log("ditekan")} item={item} />
+            )}
             numColumns={2}
             columnWrapperStyle={{
               justifyContent: "space-between",
